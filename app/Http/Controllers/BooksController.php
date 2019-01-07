@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Book;
 
 class BooksController extends Controller
 {
@@ -13,7 +14,9 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        //$books = Book::all();
+        $books = Book::orderBy('id')->paginate(2);
+        return view('books.index')->with('books', $books);
     }
 
     /**
@@ -45,7 +48,8 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::find($id);
+        return view('books.show')->with('book',$book);
     }
 
     /**

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md">
     <a class="navbar-brand" href="/">{{config('app.name', 'Book System')}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,7 +10,7 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="/books">Books</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
