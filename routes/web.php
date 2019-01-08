@@ -18,3 +18,5 @@
 Route::get('/','HomeController@index');
 
 Route::resource('books', 'BooksController');
+
+Route::resource('authors', 'AuthorsController');

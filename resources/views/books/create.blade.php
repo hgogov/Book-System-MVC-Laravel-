@@ -5,7 +5,7 @@
     {!! Form::open(['action' => 'BooksController@store', 'method' => 'POST']) !!}
     <div class="form-group">
         {{Form::label('author_id', 'Author ID')}}
-        {{Form::number('author_id', '' , ['class' => 'form-control', 'placeholder' => 'Author ID'])}}
+        {{Form::number('author_id', '' , ['class' => 'form-control', 'placeholder' => 'authors'])}}
     </div>
     <div class="form-group">
         {{Form::label('genre_id', 'Genre ID')}}

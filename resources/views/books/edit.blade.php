@@ -4,7 +4,7 @@
     <h1>Edit Book</h1>
     {!! Form::open(['action' => ['BooksController@update', $book->id], 'method' => 'POST']) !!}
     <div class="form-group">
-        {{Form::label('author_id', 'Author ID')}}
+        {{Form::label('author_id', 'authors')}}
         {{Form::number('author_id', $book->author_id , ['class' => 'form-control', 'placeholder' => 'Author ID'])}}
     </div>
     <div class="form-group">
