@@ -74,7 +74,8 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+        return view('books.edit')->with('book',$book);
     }
 
     /**
@@ -86,7 +87,21 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'author_id' => 'required',
+            'genre_id' => 'required',
+            'title' => 'required',
+            'publish_date' => 'required'
+        ]);
+
+        $book = Book::find($id);
+        $book->author_id = $request->input('author_id');
+        $book->genre_id = $request->input('genre_id');
+        $book->title = $request->input('title');
+        $book->publish_date = $request->input('publish_date');
+        $book->save();
+
+        return redirect('/books')->with('success', 'Book Updated');
     }
 
     /**

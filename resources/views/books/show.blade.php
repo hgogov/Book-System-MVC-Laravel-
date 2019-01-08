@@ -6,4 +6,6 @@
     <div>
         {{$book->title}}
     </div>
+    <hr>
+    <a href="/books/{{$book->id}}/edit" class="btn btn-outline-dark">Edit</a>
 @endsection
