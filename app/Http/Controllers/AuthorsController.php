@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use http\Exception;
 use Illuminate\Http\Request;
 use App\Author;
 
@@ -25,7 +26,7 @@ class AuthorsController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -36,7 +37,15 @@ class AuthorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required'
+        ]);
+
+        $author = new Author();
+        $author->name = $request->input('name');
+        $author->save();
+
+        return redirect('/authors')->with('success', 'Author Created');
     }
 
     /**
@@ -47,7 +56,7 @@ class AuthorsController extends Controller
      */
     public function show($id)
     {
-        $author = Author::find($id);
+        $author = Author::findOrFail($id);
         return view('authors.show')->with('author',$author);
     }
 
