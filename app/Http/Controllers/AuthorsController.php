@@ -68,7 +68,8 @@ class AuthorsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $author = Author::findOrFail($id);
+        return view('authors.edit')->with('author',$author);
     }
 
     /**
@@ -80,7 +81,15 @@ class AuthorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+           'name' => 'required'
+        ]);
+
+        $author = Author::findOrFail($id);
+        $author->name = $request->input('name');
+        $author->save();
+
+        return redirect('/authors')->with('success', 'Author Updated');
     }
 
     /**
@@ -91,6 +100,9 @@ class AuthorsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $author = Author::findOrFail($id);
+        $author->delete();
+
+        return redirect('/authors')->with('success', 'Author Removed');
     }
 }
