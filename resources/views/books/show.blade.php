@@ -8,6 +8,7 @@
     <hr>
     <a href="{{route('books.index')}}" class="btn btn-outline-dark">Go Back</a>
     <a href="/books/{{$book->id}}/edit" class="btn btn-outline-dark">Edit</a>
+    <a href="{{route('books.create')}}" class="btn btn-primary">Create</a>
 
     {!!Form::open(['action' => ['BooksController@destroy', $book->id], 'method' => 'POST', 'class' => 'float-right']) !!}
     {{Form::hidden('_method', 'DELETE')}}
