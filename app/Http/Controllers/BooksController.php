@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Genre;
 use Illuminate\Http\Request;
 use App\Book;
 
@@ -26,7 +27,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $author_ids = \DB::table('authors')->pluck('name', 'id');
+        $genre_ids = \DB::table('genres')->pluck('name', 'id');
+        return view('books.create')->with('author_ids',$author_ids)->with('genre_ids', $genre_ids);
     }
 
     /**
@@ -49,6 +52,7 @@ class BooksController extends Controller
         $book->genre_id = $request->input('genre_id');
         $book->title = $request->input('title');
         $book->publish_date = $request->input('publish_date');
+
         $book->save();
 
         return redirect('/books')->with('success', 'Book Created');
@@ -62,7 +66,7 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        $book = Book::find($id);
+        $book = Book::findOrFail($id);
         return view('books.show')->with('book',$book);
     }
 
@@ -74,8 +78,10 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        $book = Book::find($id);
-        return view('books.edit')->with('book',$book);
+        $book = Book::findOrFail($id);
+        $author_ids = \DB::table('authors')->pluck('name', 'id');
+        $genre_ids = \DB::table('genres')->pluck('name', 'id');
+        return view('books.edit')->with('book',$book)->with('author_ids',$author_ids)->with('genre_ids', $genre_ids);
     }
 
     /**
@@ -94,7 +100,7 @@ class BooksController extends Controller
             'publish_date' => 'required'
         ]);
 
-        $book = Book::find($id);
+        $book = Book::findOrFail($id);
         $book->author_id = $request->input('author_id');
         $book->genre_id = $request->input('genre_id');
         $book->title = $request->input('title');
@@ -112,7 +118,7 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
+        $book = Book::findOrFail($id);
         $book->delete();
         return redirect('/books')->with('success', 'Book Removed');
     }

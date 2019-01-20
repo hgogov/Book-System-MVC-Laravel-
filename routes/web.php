@@ -15,7 +15,7 @@
     return view('home.index');
 });*/
 
-Route::get('/','HomeController@index');
+Route::get('/','BooksController@index');
 
 Route::resource('books', 'BooksController');
 
@@ -23,4 +23,4 @@ Route::resource('authors', 'AuthorsController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index');

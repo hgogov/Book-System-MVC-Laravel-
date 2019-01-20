@@ -6,7 +6,7 @@
         @foreach($books as $book)
             <div class="card card-body bg-light">
                 <h3><a href="{{route('books.show', $book->id)}}">{{$book->title}}</a></h3>
-                <small>Published on {{$book->publish_date}}</small>
+                <small>Published on {{$book->publish_date->format('Y-m-d')}}</small>
             </div>
         @endforeach
         {{$books->links()}}
