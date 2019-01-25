@@ -25,4 +25,4 @@ Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
 
-Route::post('books/search', 'BooksController@search');
+Route::get('/books/search/index', 'BooksController@search');

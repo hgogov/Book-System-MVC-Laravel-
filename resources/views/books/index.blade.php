@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Books</h1>
-    {!! Form::open(['action' => 'BooksController@search', 'method' => 'POST']) !!}
+    {!! Form::open(['action' => 'BooksController@search', 'method' => 'GET']) !!}
     <div class="form-group">
         {{Form::select('author_id', (['' => 'Search by Author'] + $author_ids->toArray()),
             null, ['class' => 'form-group'])}}
@@ -13,8 +13,8 @@
 
         {{Form::text('q', '' , ['class' => 'form-group', 'placeholder' => 'Search books'])}}
     {{Form::submit('Submit', ['class' => 'btn btn-primary form-group'])}}
-    {!! Form::close() !!}
     </div>
+    {!! Form::close() !!}
     @if(count($books) > 0)
         <table class="table table-striped table-bordered">
             <thead>

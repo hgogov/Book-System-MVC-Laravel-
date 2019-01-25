@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Genre;
 use Illuminate\Http\Request;
 use App\Book;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use DB;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 
 class BooksController extends Controller
 {
@@ -22,7 +16,7 @@ class BooksController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
     /**
@@ -184,7 +178,7 @@ class BooksController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        if ($book->cover_image !== 'noimage.jpg') {
+        if ($book->cover_image != 'noimage.jpg') {
             Storage::disk('public')->delete('cover_images/' . $book->cover_image);
         }
 
@@ -209,9 +203,13 @@ class BooksController extends Controller
             if ($request->input('genre_id') != null) {
                 $query->where('genre_id',$request->input('genre_id'));
             }
+            //dd($query->paginate(2));
             $books = $query->paginate(2);
 
-            return view('books.search')->with('books', $books);
+
+            $author_ids = \DB::table('authors')->pluck('name', 'id');
+            $genre_ids = \DB::table('genres')->pluck('name', 'id');
+            return view('books.search')->with('books', $books)->with('author_ids', $author_ids)->with('genre_ids', $genre_ids);
         }
 
         return redirect('/books')->with('error', $error);

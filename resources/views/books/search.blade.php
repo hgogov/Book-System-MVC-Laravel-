@@ -1,7 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Books</h1>
+    <h1></h1>
+    {!! Form::open(['action' => 'BooksController@search', 'method' => 'GET']) !!}
+    <div class="form-group">
+        {{Form::select('author_id', (['' => 'Search by Author'] + $author_ids->toArray()),
+            null, ['class' => 'form-group'])}}
+        {{Form::select('genre_id', (['' => 'Search by Genre'] + $genre_ids->toArray()),
+            null, ['class' => 'form-group'])}}
+    </div>
+    <div class="input-group">
+
+        {{Form::text('q', '' , ['class' => 'form-group', 'placeholder' => 'Search books'])}}
+        {{Form::submit('Submit', ['class' => 'btn btn-primary form-group'])}}
+    </div>
+    {!! Form::close() !!}
     @if(count($books) > 0)
         <table class="table table-striped table-bordered">
             <thead>
@@ -45,8 +58,10 @@
             @endforeach
             </tbody>
         </table>
-        {{$books->links()}}
+        {{--{{$books->links()}}--}}
+        {{$books->appends(request()->input())->links()}}
     @else
-        <p>There are no books found</p>
+        <p>No results found!</p>
     @endif
+    <a href="{{route('books.index')}}" class="btn btn-outline-dark">Go Back</a>
 @endsection
