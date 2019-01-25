@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use App\Genre;
 use Illuminate\Http\Request;
 use App\Book;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use DB;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class BooksController extends Controller
 {
@@ -26,8 +33,12 @@ class BooksController extends Controller
     public function index()
     {
         //$books = Book::all();
-        $books = Book::orderBy('id')->paginate(4);
-        return view('books.index')->with('books', $books);
+        $books = Book::orderBy('id')->paginate(5);
+
+        $author_ids = \DB::table('authors')->pluck('name', 'id');
+        $genre_ids = \DB::table('genres')->pluck('name', 'id');
+
+        return view('books.index')->with('books', $books)->with('author_ids', $author_ids)->with('genre_ids', $genre_ids);
     }
 
     /**
@@ -55,7 +66,7 @@ class BooksController extends Controller
             'genre_id' => 'required',
             'title' => 'required',
             'publish_date' => 'required',
-            'cover_image' => 'image|required|max:1999',
+            'cover_image' => 'image|nullable|max:1999',
             'description' => 'required'
         ]);
 
@@ -68,7 +79,7 @@ class BooksController extends Controller
             //Get just extension
             $extension = $request->file('cover_image')->getClientOriginalExtension();
             //Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             //Upload Image
             $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
 
@@ -128,14 +139,36 @@ class BooksController extends Controller
             'author_id' => 'required',
             'genre_id' => 'required',
             'title' => 'required',
-            'publish_date' => 'required'
+            'publish_date' => 'required',
+            'description' => 'required',
+            'cover_image' => 'image|nullable|max:1999'
         ]);
+
+        if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
+            //Get filename with the extension
+            $fileNameWithExt = $request->file('cover_image')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Get just extension
+            $extension = $request->file('cover_image')->getClientOriginalExtension();
+            //Filename to store
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            //Upload Image
+            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
+
+        }
 
         $book = Book::findOrFail($id);
         $book->author_id = $request->input('author_id');
         $book->genre_id = $request->input('genre_id');
         $book->title = $request->input('title');
         $book->publish_date = $request->input('publish_date');
+        $book->description = $request->input('description');
+        if ($request->hasFile('cover_image') && $request->file('cover_image')->isValid()) {
+            Storage::disk('public')->delete('cover_images/' . $book->cover_image);
+
+            $book->cover_image = $fileNameToStore;
+        }
         $book->save();
 
         return redirect('/books')->with('success', 'Book Updated');
@@ -150,7 +183,37 @@ class BooksController extends Controller
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
+
+        if ($book->cover_image !== 'noimage.jpg') {
+            Storage::disk('public')->delete('cover_images/' . $book->cover_image);
+        }
+
         $book->delete();
         return redirect('/books')->with('success', 'Book Removed');
+    }
+
+    public function search(Request $request)
+    {
+        $error = 'You did not enter a search!';
+
+        if ($request->input('q') != null || $request->input('author_id') != null || $request->input('genre_id') != null) {
+            $query = Book::query();
+            if ($request->input('q') != null) {
+                $query->where('title','LIKE', "%" . $request->get('q') . "%");
+            }
+
+            if ($request->input('author_id') != null) {
+                $query->where('author_id',$request->input('author_id'));
+            }
+
+            if ($request->input('genre_id') != null) {
+                $query->where('genre_id',$request->input('genre_id'));
+            }
+            $books = $query->paginate(2);
+
+            return view('books.search')->with('books', $books);
+        }
+
+        return redirect('/books')->with('error', $error);
     }
 }

@@ -24,3 +24,5 @@ Route::resource('authors', 'AuthorsController');
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+
+Route::post('books/search', 'BooksController@search');

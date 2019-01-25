@@ -25,7 +25,7 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        $authors = Author::orderBy('id')->paginate(3);
+        $authors = Author::orderBy('id')->paginate(6);
         return view('authors.index')->with('authors', $authors);
     }
 

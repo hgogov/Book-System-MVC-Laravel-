@@ -8,7 +8,6 @@ class Book extends Model
 {
     protected $dates = ['publish_date'];
 
-
     public function author(){
         return $this->belongsTo('App\Author');
     }
@@ -16,4 +15,6 @@ class Book extends Model
     public function genre(){
         return $this->belongsTo('App\Genre');
     }
+
+    protected $table = 'books';
 }

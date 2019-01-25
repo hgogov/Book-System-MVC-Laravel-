@@ -5,6 +5,12 @@
     <h1>{{$book->title}}</h1>
     <div>
         <table>
+            <span class="float-left">
+            <tr>
+                <td><img style="width: border-box;height: border-box;width: 150px;"
+                         src="/storage/cover_images/{{$book->cover_image}}"></td>
+            </tr>
+            </span>
             <tr>
                 <th>Author:</th>
                 <td>{{$book->author->name}}</td>
@@ -24,11 +30,6 @@
             <tr>
                 <th>Description:</th>
                 <td>{{$book->description}}</td>
-            </tr>
-            <tr>
-                <th>Cover:</th>
-            <tr>
-                <td><img style="width: border-box;height: border-box;width: 150px;" src="/storage/cover_images/{{$book->cover_image}}"></td>
             </tr>
         </table>
     </div>
