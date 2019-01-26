@@ -15,17 +15,20 @@ class UsersTableSeeder extends Seeder
         User::create(array(
             'name'=> 'JoJo',
             'email' => 'jojo@jojo.jj',
-            'password' => '1234JoJo!',
+            'password' => bcrypt('1234JoJo!'),
+            'role_id' => 1
         ));
         User::create(array(
             'name'=> 'Jonathan',
             'email' => 'jonathan@jojo.jj',
-            'password' => '1234JoJo!'
+            'password' => bcrypt('1234JoJo!'),
+            'role_id' => 1
         ));
         User::create(array(
             'name'=> 'Jotaro',
             'email' => 'jotaro@jojo.jj',
-            'password' => '1234JoJo!'
+            'password' => bcrypt('1234JoJo!'),
+            'role_id' => 1
         ));
     }
 }

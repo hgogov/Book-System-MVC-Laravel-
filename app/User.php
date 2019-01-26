@@ -34,4 +34,8 @@ class User extends Authenticatable
     public function isAdmin()    {
         return $this->role_id === self::ADMIN_ROLE;
     }
+
+    public function roles(){
+        return $this->belongsTo('App\Role');
+    }
 }

@@ -26,7 +26,6 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //$books = Book::all();
         $books = Book::orderBy('id')->paginate(5);
 
         $author_ids = \DB::table('authors')->pluck('name', 'id');

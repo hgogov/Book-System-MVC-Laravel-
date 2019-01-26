@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use http\Exception;
+use App\Genre;
 use Illuminate\Http\Request;
-use App\Author;
 
-class AuthorsController extends Controller
+class GenresController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,8 +24,8 @@ class AuthorsController extends Controller
      */
     public function index()
     {
-        $authors = Author::orderBy('id')->paginate(6);
-        return view('authors.index')->with('authors', $authors);
+        $genres = Genre::orderBy('id')->paginate(5);
+        return view('genres.index')->with('genres', $genres);
     }
 
     /**
@@ -36,13 +35,13 @@ class AuthorsController extends Controller
      */
     public function create()
     {
-        return view('authors.create');
+        return view('genres.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,42 +50,42 @@ class AuthorsController extends Controller
             'name' => 'required'
         ]);
 
-        $author = new Author();
-        $author->name = $request->input('name');
-        $author->save();
+        $genre = new Genre();
+        $genre->name = $request->input('name');
+        $genre->save();
 
-        return redirect('/authors')->with('success', 'Author Created');
+        return redirect('/genres')->with('success', 'Genre Created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $author = Author::findOrFail($id);
-        return view('authors.show')->with('author', $author);
+        $genre = Genre::findOrFail($id);
+        return view('genres.show')->with('genre', $genre);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $author = Author::findOrFail($id);
-        return view('authors.edit')->with('author', $author);
+        $genre = Genre::findOrFail($id);
+        return view('genres.edit')->with('genre', $genre);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -95,24 +94,24 @@ class AuthorsController extends Controller
             'name' => 'required'
         ]);
 
-        $author = Author::findOrFail($id);
-        $author->name = $request->input('name');
-        $author->save();
+        $genre = Genre::findOrFail($id);
+        $genre->name = $request->input('name');
+        $genre->save();
 
-        return redirect('/authors')->with('success', 'Author Updated');
+        return redirect('/genres')->with('success', 'Genre Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $author = Author::findOrFail($id);
-        $author->delete();
+        $genre = Genre::findOrFail($id);
+        $genre->delete();
 
-        return redirect('/authors')->with('success', 'Author Removed');
+        return redirect('/genres')->with('success', 'Genre Removed');
     }
 }

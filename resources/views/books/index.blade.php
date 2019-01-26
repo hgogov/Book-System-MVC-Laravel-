@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Books</h1>
     {!! Form::open(['action' => 'BooksController@search', 'method' => 'GET']) !!}
     <div class="form-group">
         {{Form::select('author_id', (['' => 'Search by Author'] + $author_ids->toArray()),
@@ -19,22 +18,25 @@
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
-                @if(!Auth::guest())
-                    <th> id</th>@endif
-                <th style=@if(Auth::guest())"border-right: hidden"@endif> @if(!Auth::guest())cover @endif</th>
+                @if(Auth::check())
+                    @if(auth()->user()->IsAdmin())
+                    <th> id</th>@endif @endif
+                <th style=@if(Auth::check())@if(!auth()->user()->IsAdmin())"border-right: hidden" @endif @endif> @if(Auth::check()) @if(auth()->user()->IsAdmin())cover @endif @endif </th>
                 <th> title</th>
                 <th> author</th>
                 <th> genre</th>
                 <th> publish date</th>
-                @if(!Auth::guest())
-                    <th></th>@endif
+                @if(Auth::check())
+                        @if(auth()->user()->IsAdmin())
+                    <th></th>@endif @endif
             </tr>
             </thead>
             <tbody>
             @foreach($books as $book)
                 <tr>
-                    @if(!Auth::guest())
-                        <td> {{$book->id}} </td>@endif
+                    @if(Auth::check())
+                        @if(auth()->user()->IsAdmin())
+                        <td> {{$book->id}} </td>@endif @endif
                     <td style="width: 75px;border-right: hidden"><a href="{{route('books.show', $book->id)}}"><img
                                     src="/storage/cover_images/{{$book->cover_image}}"
                                     style="width: 50px; height: 75px;"></a></td>
@@ -42,7 +44,8 @@
                     <td> {{$book->author->name}} </td>
                     <td> {{$book->genre->name}} </td>
                     <td> {{$book->publish_date->format('Y-m-d')}} </td>
-                    @if(!Auth::guest())
+                    @if(Auth::check())
+                        @if(auth()->user()->IsAdmin())
                         <td style="width: 240px">
                             {!!Form::open(['action' => ['BooksController@destroy', $book->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                             {{csrf_field()}}
@@ -53,6 +56,7 @@
                             <a href="{{route('books.create')}}" class="btn btn-sm btn-primary">Create</a>
                             <a href="{{route('books.show', $book->id)}}" class="btn btn-sm btn-success">Details</a>
                         </td>
+                            @endif
                     @endif
                 </tr>
             @endforeach
