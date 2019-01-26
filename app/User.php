@@ -35,7 +35,7 @@ class User extends Authenticatable
         return $this->role_id === self::ADMIN_ROLE;
     }
 
-    public function roles(){
+    public function role(){
         return $this->belongsTo('App\Role');
     }
 }
