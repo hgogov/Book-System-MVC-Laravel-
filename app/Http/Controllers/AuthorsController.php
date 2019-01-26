@@ -15,7 +15,7 @@ class AuthorsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('is_admin', ['except' => ['index', 'show']]);
+        $this->middleware('is_admin');
     }
 
     /**

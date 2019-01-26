@@ -64,7 +64,7 @@ class BooksController extends Controller
         ]);
 
         //Handle File Upload
-        if ($request->hasFile('cover_image')) {
+        if ($request->hasFile('cover_image') && $request->file()->isValid()) {
             //Get filename with the extension
             $fileNameWithExt = $request->file('cover_image')->getClientOriginalName();
             //Get just filename
@@ -182,7 +182,7 @@ class BooksController extends Controller
         }
 
         $book->delete();
-        return redirect('/books')->with('success', 'Book Removed');
+        return back()->with('success', 'Book Removed');
     }
 
     public function search(Request $request)

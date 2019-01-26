@@ -6,7 +6,7 @@
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th> id</th>
+                <th style="width: 75px"> id</th>
                 <th> name</th>
                 <th> email</th>
                 <th> role</th>
@@ -24,16 +24,16 @@
                     <td> {{$user->role->role}} </td>
                     <td> {{$user->created_at->format('Y-m-d')}} </td>
                     @if(!Auth::guest())
-                        <td>
-                            <a href="/users/{{$user->id}}/edit"
-                               class="btn btn-sm btn-outline-dark float-left">Edit</a>
-                            <a href="{{route('users.create')}}" class="btn btn-sm btn-primary float-left">Create</a>
-                            <a href="{{route('users.show', $user->id)}}" class="btn btn-sm btn-success float-left">Details</a>
+                        <td style="width: 240px;">
                             {!!Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                             {{csrf_field()}}
                             {{Form::hidden('_method', 'DELETE')}}
-                            {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-left'])}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-right'])}}
                             {!!Form::close() !!}
+                            <a href="/users/{{$user->id}}/edit"
+                               class="btn btn-sm btn-outline-dark">Edit</a>
+                            <a href="{{route('users.create')}}" class="btn btn-sm btn-primary">Create</a>
+                            <a href="{{route('users.show', $user->id)}}" class="btn btn-sm btn-success">Details</a>
                         </td>
                     @endif
                 </tr>

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Genre;
+use App\Role;
 use Illuminate\Http\Request;
 
-class GenresController extends Controller
+class RolesController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,8 +24,8 @@ class GenresController extends Controller
      */
     public function index()
     {
-        $genres = Genre::orderBy('id')->paginate(5);
-        return view('genres.index')->with('genres', $genres);
+        $roles = Role::orderBy('id')->paginate(5);
+        return view('roles.index')->with('roles', $roles);
     }
 
     /**
@@ -35,83 +35,82 @@ class GenresController extends Controller
      */
     public function create()
     {
-        return view('genres.create');
+        return view('roles.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'role' => 'required'
         ]);
 
-        $genre = new Genre();
-        $genre->name = $request->input('name');
-        $genre->save();
+        $role = new Role();
+        $role->role = $request->input('role');
+        $role->save();
 
-        return redirect('/genres')->with('success', 'Genre Created');
+        return redirect('/roles')->with('success', 'Role Created');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $genre = Genre::findOrFail($id);
-        return view('genres.show')->with('genre', $genre);
+        $role = Role::findOrFail($id);
+        return view('roles.show')->with('role', $role);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $genre = Genre::findOrFail($id);
-        return view('genres.edit')->with('genre', $genre);
+        $role = Role::findOrFail($id);
+        return view('roles.edit')->with('role', $role);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'role' => 'required'
         ]);
 
-        $genre = Genre::findOrFail($id);
-        $genre->name = $request->input('name');
-        $genre->save();
-
-        return redirect('/genres')->with('success', 'Genre Updated');
+        $role = Role::findOrFail($id);
+        $role->role = $request->input('role');
+        $role->save();
+        return redirect('/roles')->with('success', 'Role Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $genre = Genre::findOrFail($id);
-        $genre->delete();
+        $role = Role::findOrFail($id);
+        $role->delete();
 
-        return redirect('/genres')->with('success', 'Genre Removed');
+        return redirect('/roles')->with('success', 'Role Removed');
     }
 }

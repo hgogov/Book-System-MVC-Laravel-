@@ -6,7 +6,7 @@
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th>id</th>
+                <th style="width: 75px">id</th>
                 <th>name</th>
                 @if(!Auth::guest())<th></th>@endif
             </tr>
@@ -17,15 +17,15 @@
                     <td>{{$author->id}}</td>
                     <td><a href="{{route('authors.show', $author->id)}}">{{$author->name}}</a></td>
                     @if(!Auth::guest())
-                    <td>
-                        <a href="/authors/{{$author->id}}/edit" class="btn btn-sm btn-outline-dark float-left">Edit</a>
-                        <a href="{{route('authors.create')}}" class="btn btn-sm btn-primary float-left">Create</a>
-                        <a href="{{route('authors.show', $author->id)}}" class="btn btn-sm btn-success float-left">Details</a>
+                    <td style="width: 240px">
                         {!!Form::open(['action' => ['AuthorsController@destroy', $author->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                         {{csrf_field()}}
                         {{Form::hidden('_method', 'DELETE')}}
-                        {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-left'])}}
+                        {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-right'])}}
                         {!!Form::close() !!}
+                        <a href="/authors/{{$author->id}}/edit" class="btn btn-sm btn-outline-dark">Edit</a>
+                        <a href="{{route('authors.create')}}" class="btn btn-sm btn-primary">Create</a>
+                        <a href="{{route('authors.show', $author->id)}}" class="btn btn-sm btn-success">Details</a>
                     </td>
                         @endif
                 </tr>
