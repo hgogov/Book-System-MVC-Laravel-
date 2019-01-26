@@ -19,10 +19,11 @@ Route::get('/','BooksController@index');
 
 Route::resource('books', 'BooksController');
 
+Route::get('/books/search/index', 'BooksController@search');
+
 Route::resource('authors', 'AuthorsController');
 
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
 
-Route::get('/books/search/index', 'BooksController@search');

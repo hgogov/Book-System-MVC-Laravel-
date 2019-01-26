@@ -16,7 +16,7 @@ class BooksController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
+        $this->middleware('is_admin', ['except' => ['index', 'show', 'search']]);
     }
 
     /**
