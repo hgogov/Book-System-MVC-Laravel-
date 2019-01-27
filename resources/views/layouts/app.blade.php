@@ -23,6 +23,7 @@
     <div id="app">
         @include('inc.navbar')
         <main class="py-4 container">
+            @auth() @if(auth()->user()->isAdmin())<a href="/dashboard" class="btn btn-outline-dark float-right">Dashboard</a>@endif @endauth
             @include('inc.messages')
             @yield('content')
         </main>

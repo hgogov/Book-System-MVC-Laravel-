@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    //protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -69,5 +69,15 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role_id' => User::DEFAULT_ROLE,
         ]);
+    }
+
+    public function redirectTo()
+    {
+        if(auth()->user()->isAdmin()){
+            return '/dashboard';
+        }
+        else{
+            return '/';
+        }
     }
 }

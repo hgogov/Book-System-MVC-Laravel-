@@ -31,4 +31,6 @@ Route::resource('genres', 'GenresController');
 
 Route::resource('users', 'UsersController');
 
+Route::get('/users/search/index', 'UsersController@search');
+
 Route::resource('roles', 'RolesController');

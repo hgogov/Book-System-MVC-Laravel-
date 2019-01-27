@@ -202,7 +202,6 @@ class BooksController extends Controller
             if ($request->input('genre_id') != null) {
                 $query->where('genre_id',$request->input('genre_id'));
             }
-            //dd($query->paginate(2));
             $books = $query->paginate(2);
 
 

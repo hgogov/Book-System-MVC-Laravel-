@@ -127,4 +127,21 @@ class UsersController extends Controller
 
         return redirect('/users')->with('success', 'User Removed');
     }
+
+    public function search(Request $request)
+    {
+        $error = 'You did not enter a search!';
+
+        if ($request->input('q') != null) {
+            $query = User::query();
+            if ($request->input('q') != null) {
+                $query->where('name','LIKE', "%" . $request->get('q') . "%");
+            }
+            $users = $query->paginate(10);
+
+            return view('users.search')->with('users', $users);
+        }
+
+        return redirect('/users')->with('error', $error);
+    }
 }

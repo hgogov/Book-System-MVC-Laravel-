@@ -17,12 +17,6 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/books">Books</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/authors">Authors</a>
-                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -44,6 +38,7 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if(auth()->user()->isAdmin())<a href="/dashboard" class="dropdown-item">Dashboard</a>@endif
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

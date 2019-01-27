@@ -7,7 +7,6 @@
         {{Form::submit('Submit', ['class' => 'btn btn-primary form-group'])}}
     </div>
     {!! Form::close() !!}
-    <h1>Users</h1>
     @if(count($users) > 0)
         <table class="table table-striped table-bordered">
             <thead>
@@ -46,8 +45,10 @@
             @endforeach
             </tbody>
         </table>
-        {{$users->links()}}
+        {{--{{$users->links()}}--}}
+        {{$users->appends(request()->input())->links()}}
     @else
-        <p>No users found</p>
+        <p>No results found!</p>
     @endif
+    <a href="{{route('users.index')}}" class="btn btn-outline-dark">Go Back</a>
 @endsection
