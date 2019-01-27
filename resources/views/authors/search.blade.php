@@ -23,17 +23,17 @@
                     <td>{{$author->id}}</td>
                     <td><a href="{{route('authors.show', $author->id)}}">{{$author->name}}</a></td>
                     @if(!Auth::guest())
-                    <td style="width: 255px">
-                        {!!Form::open(['action' => ['AuthorsController@destroy', $author->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
-                        {{csrf_field()}}
-                        {{Form::hidden('_method', 'DELETE')}}
-                        {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-right'])}}
-                        {!!Form::close() !!}
-                        <a href="/authors/{{$author->id}}/edit" class="btn btn-sm btn-outline-dark">Edit</a>
-                        <a href="{{route('authors.create')}}" class="btn btn-sm btn-primary">Create</a>
-                        <a href="{{route('authors.show', $author->id)}}" class="btn btn-sm btn-success">Details</a>
-                    </td>
-                        @endif
+                        <td style="width: 255px">
+                            {!!Form::open(['action' => ['AuthorsController@destroy', $author->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
+                            {{csrf_field()}}
+                            {{Form::hidden('_method', 'DELETE')}}
+                            {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-right'])}}
+                            {!!Form::close() !!}
+                            <a href="/authors/{{$author->id}}/edit" class="btn btn-sm btn-outline-dark">Edit</a>
+                            <a href="{{route('authors.create')}}" class="btn btn-sm btn-primary">Create</a>
+                            <a href="{{route('authors.show', $author->id)}}" class="btn btn-sm btn-success">Details</a>
+                        </td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
@@ -42,4 +42,5 @@
     @else
         <p>No authors found</p>
     @endif
+    <a href="{{route('authors.index')}}" class="btn btn-outline-dark">Go Back</a>
 @endsection

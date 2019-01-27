@@ -7,7 +7,6 @@
         {{Form::submit('Submit', ['class' => 'btn btn-primary form-group'])}}
     </div>
     {!! Form::close() !!}
-    <h1>Genres</h1>
     @if(count($genres) > 0)
         <table class="table table-striped table-bordered">
             <thead>
@@ -44,4 +43,5 @@
     @else
         <p>No genres found</p>
     @endif
+    <a href="{{route('genres.index')}}" class="btn btn-outline-dark">Go Back</a>
 @endsection

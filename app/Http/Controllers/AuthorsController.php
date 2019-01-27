@@ -115,4 +115,21 @@ class AuthorsController extends Controller
 
         return redirect('/authors')->with('success', 'Author Removed');
     }
+
+    public function search(Request $request)
+    {
+        $error = 'You did not enter a search!';
+
+        if ($request->input('q') != null) {
+            $query = Author::query();
+            if ($request->input('q') != null) {
+                $query->where('name','LIKE', "%" . $request->get('q') . "%");
+            }
+            $auhtors = $query->paginate(10);
+
+            return view('authors.search')->with('authors', $auhtors);
+        }
+
+        return redirect('/authors')->with('error', $error);
+    }
 }

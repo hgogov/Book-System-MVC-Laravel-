@@ -23,11 +23,15 @@ Route::get('/books/search/index', 'BooksController@search');
 
 Route::resource('authors', 'AuthorsController');
 
+Route::get('/authors/search/index', 'AuthorsController@search');
+
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('genres', 'GenresController');
+
+Route::get('/genres/search/index', 'GenresController@search');
 
 Route::resource('users', 'UsersController');
 

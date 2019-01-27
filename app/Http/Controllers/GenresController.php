@@ -114,4 +114,21 @@ class GenresController extends Controller
 
         return redirect('/genres')->with('success', 'Genre Removed');
     }
+
+    public function search(Request $request)
+    {
+        $error = 'You did not enter a search!';
+
+        if ($request->input('q') != null) {
+            $query = Genre::query();
+            if ($request->input('q') != null) {
+                $query->where('name','LIKE', "%" . $request->get('q') . "%");
+            }
+            $genres = $query->paginate(10);
+
+            return view('genres.search')->with('genres', $genres);
+        }
+
+        return redirect('/genres')->with('error', $error);
+    }
 }
