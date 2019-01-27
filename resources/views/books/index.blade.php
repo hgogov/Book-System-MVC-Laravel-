@@ -46,15 +46,16 @@
                     <td> {{$book->publish_date->format('Y-m-d')}} </td>
                     @if(Auth::check())
                         @if(auth()->user()->IsAdmin())
-                        <td style="width: 240px">
+                        <td style="width: 255px">
                             {!!Form::open(['action' => ['BooksController@destroy', $book->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                             {{csrf_field()}}
                             {{Form::hidden('_method', 'DELETE')}}
                             {{Form::submit('Delete', ['class' => 'btn btn-sm btn-danger float-right'])}}
                             {!!Form::close() !!}
-                            <a href="/books/{{$book->id}}/edit" class="btn btn-sm btn-outline-dark">Edit</a>
-                            <a href="{{route('books.create')}}" class="btn btn-sm btn-primary">Create</a>
-                            <a href="{{route('books.show', $book->id)}}" class="btn btn-sm btn-success">Details</a>
+                            <a href="/books/{{$book->id}}/edit" class="btn btn-sm btn-outline-dark ">Edit</a>
+                            <a href="{{route('books.create')}}" class="btn btn-sm btn-primary ">Create</a>
+                            <a href="{{route('books.show', $book->id)}}" class="btn btn-sm btn-success ">Details</a>
+
                         </td>
                             @endif
                     @endif

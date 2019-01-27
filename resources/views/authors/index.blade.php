@@ -17,7 +17,7 @@
                     <td>{{$author->id}}</td>
                     <td><a href="{{route('authors.show', $author->id)}}">{{$author->name}}</a></td>
                     @if(!Auth::guest())
-                    <td style="width: 240px">
+                    <td style="width: 255px">
                         {!!Form::open(['action' => ['AuthorsController@destroy', $author->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                         {{csrf_field()}}
                         {{Form::hidden('_method', 'DELETE')}}

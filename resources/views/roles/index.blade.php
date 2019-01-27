@@ -17,7 +17,7 @@
                     <td>{{$role->id}}</td>
                     <td><a href="{{route('roles.show', $role->id)}}">{{$role->role}}</a></td>
                     @if(!Auth::guest())
-                        <td style="width: 240px">
+                        <td style="width: 255px">
                             {!!Form::open(['action' => ['RolesController@destroy', $role->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                             {{csrf_field()}}
                             {{Form::hidden('_method', 'DELETE')}}

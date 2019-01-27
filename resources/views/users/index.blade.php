@@ -30,7 +30,7 @@
                     <td> {{$user->role->role}} </td>
                     <td> {{$user->created_at->format('Y-m-d')}} </td>
                     @if(!Auth::guest())
-                        <td style="width: 240px;">
+                        <td style="width: 255px;">
                             {!!Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                             {{csrf_field()}}
                             {{Form::hidden('_method', 'DELETE')}}

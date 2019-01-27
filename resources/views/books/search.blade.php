@@ -47,7 +47,7 @@
                     <td> {{$book->publish_date->format('Y-m-d')}} </td>
                     @if(Auth::check())
                         @if(auth()->user()->isAdmin())
-                            <td style="width: 240px">
+                            <td style="width: 255px">
                                 {!!Form::open(['action' => ['BooksController@destroy', $book->id], 'method' => 'POST', 'class' => '','onsubmit' => 'return ConfirmDelete()']) !!}
                                 {{csrf_field()}}
                                 {{Form::hidden('_method', 'DELETE')}}
